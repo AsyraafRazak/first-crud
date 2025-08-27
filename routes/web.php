@@ -19,3 +19,5 @@ Route::get('/inventories/{inventory}', [InventoryController::class, 'show'])->na
 Route::get('inventories/{inventory}/delete', [InventoryController::class, 'destroy'])->name('inventory.destroy');
 
 Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');
+Route::get('/vehicles/create', [VehicleController::class, 'create'])->name('vehicle.create');
+Route::post('/vehicles/create', [VehicleController::class, 'store']);
