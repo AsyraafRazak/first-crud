@@ -35,4 +35,9 @@ class InventoryController extends Controller
         //return to inventory index
         return redirect('inventories');
     }
+
+    public function show(Inventory $inventory)
+    {
+        return view('inventories.show', compact('inventory'));
+    }
 }
