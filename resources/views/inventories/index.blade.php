@@ -31,9 +31,9 @@
                                         <td>{{ $inventory->description }}</td>
                                         <td><a href="{{ route('inventory.show', $inventory) }}"
                                                 class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                                            <a href="{{ route('inventory.show', $inventory) }}"
+                                            <a href="{{ route('inventory.edit', $inventory) }}"
                                                 class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                            <a onclick="return confirm('Delete tau')"
+                                            <a onclick="return confirm('Delete {{ $inventory->name }} tau')"
                                                 href="{{ route('inventory.destroy', $inventory) }}"
                                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
                                         </td>

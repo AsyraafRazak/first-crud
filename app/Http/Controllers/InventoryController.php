@@ -41,6 +41,25 @@ class InventoryController extends Controller
         return view('inventories.show', compact('inventory'));
     }
 
+    public function edit(Inventory $inventory)
+    {
+        return view('inventories.edit', compact('inventory'));
+    }
+
+
+    //Request tu sebab dari form
+    public function update(Request $request, Inventory $inventory)
+    {
+        // update using model
+        $inventory->name = $request->name;
+        $inventory->quantity = $request->quantity;
+        $inventory->description = $request->description;
+        $inventory->save();
+
+        // return to inventory index
+        return redirect('inventories');
+    }
+
     public function destroy(Inventory $inventory)
     {
         $inventory->delete();
