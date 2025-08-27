@@ -39,9 +39,9 @@
                                             <form action="{{ route('inventories.destroy', $inventory) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button onclick="return confirm('Delete {{ $inventory->name }} tau')"
-                                                    type="submit" class="btn btn-danger btn-sm"><i
-                                                        class="bi bi-trash"></i></a>
+                                                <button onclick="return confirm('Delete {{ $inventory->name }}') || event.preventDefault();"
+                                                    type="submit" class="btn btn-danger btn-sm">
+                                                    <i class="bi bi-trash"></i></a>
                                             </form>
                                         </td>
                                     </tr>

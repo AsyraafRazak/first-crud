@@ -46,10 +46,17 @@ class VehicleController extends Controller
     {
         // update using model
         $vehicle->name = $request->name;
-        $vehicle->quantity = $request->qty;
+        $vehicle->qty = $request->qty;
         $vehicle->save();
 
         // return to vehicle index
         return redirect('vehicles');
+    }
+
+    public function destroy(Vehicle $vehicle)
+    {
+        $vehicle->delete();
+
+        return redirect()->route('vehicles.index');
     }
 }

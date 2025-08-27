@@ -6,7 +6,7 @@ use App\Http\Controllers\VehicleController;
 use App\Models\Vehicle;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Auth::routes();
@@ -28,3 +28,4 @@ Route::post('/vehicles/create', [VehicleController::class, 'store']);
 Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->name('vehicles.show');
 Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->name('vehicles.edit');
 Route::post('/vehicles/{vehicle}/edit', [VehicleController::class, 'update']);
+Route::delete('/vehicles/destroy/{vehicle}', [VehicleController::class, 'destroy'])->name('vehicles.destroy');

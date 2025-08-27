@@ -27,7 +27,7 @@
                                         <tr>
                                             <td>{{ $vehicle->id }}</td>
                                             <td>{{ $vehicle->name }}</td>
-                                            <td>{{ $vehicle->qty}}</td>
+                                            <td>{{ $vehicle->qty }}</td>
                                             <td><a href="{{ route('vehicles.show', $vehicle) }}"
                                                     class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
                                                 <a href="{{ route('vehicles.edit', $vehicle) }}"
@@ -35,6 +35,15 @@
                                                 {{-- <a onclick="return confirm('Delete tau')"
                                                     href="{{ route('vehicle.destroy', $vehicle) }}"
                                                     class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a> --}}
+                                                <form action="{{ route('vehicles.destroy', $vehicle) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button
+                                                        onclick="return confirm('Delete {{ $vehicle->name }}') || event.preventDefault();"
+                                                        type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="bi bi-trash"></i></a>
+                                                </form>
                                             </td>
                                         </tr>
                                     @endforeach
