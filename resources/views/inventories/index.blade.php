@@ -7,7 +7,9 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>{{ __('Inventories Index') }}</span>
-                        <a href="{{ route('inventory.create') }}" class="btn btn-secondary btn-sm">New</a>
+                        <a href="{{ route('inventory.create') }}" class="btn btn-success btn-sm">
+                            <i class="bi bi-plus-lg"></i>
+                        </a>
                     </div>
                     <div class="card-body">
                         <table class="table">
@@ -28,7 +30,13 @@
                                         <td>{{ $inventory->quantity }}</td>
                                         <td>{{ $inventory->description }}</td>
                                         <td><a href="{{ route('inventory.show', $inventory) }}"
-                                                class="btn btn-secondary btn-sm">Show</a></td>
+                                                class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
+                                            <a href="{{ route('inventory.show', $inventory) }}"
+                                                class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                            <a onclick="return confirm('Delete tau')"
+                                                href="{{ route('inventory.destroy', $inventory) }}"
+                                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

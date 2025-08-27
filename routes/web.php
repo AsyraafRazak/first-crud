@@ -16,5 +16,6 @@ Route::get('/inventories', [InventoryController::class, 'index'])->name('invento
 Route::get('/inventories/create', [InventoryController::class, 'create'])->name('inventory.create');
 Route::post('/inventories/create', [InventoryController::class, 'store']);
 Route::get('/inventories/{inventory}', [InventoryController::class, 'show'])->name('inventory.show');
+Route::get('inventories/{inventory}/delete', [InventoryController::class, 'destroy'])->name('inventory.destroy');
 
 Route::get('/vehicles', [VehicleController::class, 'index'])->name('vehicle.index');

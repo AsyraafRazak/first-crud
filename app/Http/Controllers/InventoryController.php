@@ -40,4 +40,11 @@ class InventoryController extends Controller
     {
         return view('inventories.show', compact('inventory'));
     }
+
+    public function destroy(Inventory $inventory)
+    {
+        $inventory->delete();
+
+        return redirect()->route('inventory.index');
+    }
 }

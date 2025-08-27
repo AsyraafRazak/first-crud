@@ -25,7 +25,7 @@
                             <input type="text" class="form-control" id="description" name="description" required>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Create Inventory</button>
+                        <button type="submit" class="btn btn-success"><i class="bi bi-plus-lg"></i></button>
                         <a href="{{ route('inventory.index') }}" class="btn btn-secondary">Back</a>
                     </form> 
                 </div>
