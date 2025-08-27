@@ -19,6 +19,7 @@
                                     <th>Name</th>
                                     <th>Quantity</th>
                                     <th>Description</th>
+                                    <th>User</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -29,6 +30,8 @@
                                         <td>{{ $inventory->name }}</td>
                                         <td>{{ $inventory->quantity }}</td>
                                         <td>{{ $inventory->description }}</td>
+                                        {{-- ni kalau nak tarik dari database lain --}}
+                                        <td>{{ $inventory->user->name}}</td> 
                                         <td><a href="{{ route('inventories.show', $inventory) }}"
                                                 class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
                                             <a href="{{ route('inventories.edit', $inventory) }}"

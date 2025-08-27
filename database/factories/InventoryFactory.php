@@ -25,6 +25,7 @@ class InventoryFactory extends Factory
             'name' => $this->faker->word(),
             'quantity' => $this->faker->numberBetween(1,100),
             'description' => $this->faker->sentence(), 
+            'user_id'=> \App\Models\User::factory(),
         ];
     }
 }
