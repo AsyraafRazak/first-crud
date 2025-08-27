@@ -29,4 +29,27 @@ class VehicleController extends Controller
         //return to $vehicle index
         return redirect('vehicles');
     }
+
+    public function show(Vehicle $vehicle)
+    {
+        return view('vehicles.show', compact('vehicle'));
+    }
+
+    public function edit(Vehicle $vehicle)
+    {
+        return view('vehicles.edit', compact('vehicle'));
+    }
+
+
+    //Request tu sebab dari form
+    public function update(Request $request, Vehicle $vehicle)
+    {
+        // update using model
+        $vehicle->name = $request->name;
+        $vehicle->quantity = $request->qty;
+        $vehicle->save();
+
+        // return to vehicle index
+        return redirect('vehicles');
+    }
 }

@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>{{ __('Inventories Show') }}</span>
-                        <a href="{{ route('inventory.index') }}" class="btn btn-danger"><i class="bi bi-x-lg"></i></i></a>
+                        <a href="{{ route('inventories.index') }}" class="btn btn-danger"><i class="bi bi-x-lg"></i></i></a>
                     </div>
                     <div class="card-body">
                         <div class="mb-3">

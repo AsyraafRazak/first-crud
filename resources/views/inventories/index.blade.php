@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>{{ __('Inventories Index') }}</span>
-                        <a href="{{ route('inventory.create') }}" class="btn btn-success btn-sm">
+                        <a href="{{ route('inventories.create') }}" class="btn btn-success btn-sm">
                             <i class="bi bi-plus-lg"></i>
                         </a>
                     </div>
@@ -29,13 +29,20 @@
                                         <td>{{ $inventory->name }}</td>
                                         <td>{{ $inventory->quantity }}</td>
                                         <td>{{ $inventory->description }}</td>
-                                        <td><a href="{{ route('inventory.show', $inventory) }}"
+                                        <td><a href="{{ route('inventories.show', $inventory) }}"
                                                 class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                                            <a href="{{ route('inventory.edit', $inventory) }}"
+                                            <a href="{{ route('inventories.edit', $inventory) }}"
                                                 class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                            <a onclick="return confirm('Delete {{ $inventory->name }} tau')"
-                                                href="{{ route('inventory.destroy', $inventory) }}"
-                                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
+                                            {{-- <a onclick="return confirm('Delete {{ $inventory->name }} tau')"
+                                                href="{{ route('inventories.destroy', $inventory) }}"
+                                                class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a> --}}
+                                            <form action="{{ route('inventories.destroy', $inventory) }}" method="POST" class="d-inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button onclick="return confirm('Delete {{ $inventory->name }} tau')"
+                                                    type="submit" class="btn btn-danger btn-sm"><i
+                                                        class="bi bi-trash"></i></a>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach

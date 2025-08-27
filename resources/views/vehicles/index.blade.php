@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>{{ __('Vehicles Index') }}</span>
-                        <a href="{{ route('vehicle.create') }}" class="btn btn-success btn-sm">
+                        <a href="{{ route('vehicles.create') }}" class="btn btn-success btn-sm">
                             <i class="bi bi-plus-lg"></i>
                         </a>
                     </div>
@@ -28,14 +28,14 @@
                                             <td>{{ $vehicle->id }}</td>
                                             <td>{{ $vehicle->name }}</td>
                                             <td>{{ $vehicle->qty}}</td>
-                                            {{-- <td><a href="{{ route('vehicle.show', $vehicle) }}"
+                                            <td><a href="{{ route('vehicles.show', $vehicle) }}"
                                                     class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
-                                                <a href="{{ route('vehicle.show', $vehicle) }}"
+                                                <a href="{{ route('vehicles.edit', $vehicle) }}"
                                                     class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                                <a onclick="return confirm('Delete tau')"
+                                                {{-- <a onclick="return confirm('Delete tau')"
                                                     href="{{ route('vehicle.destroy', $vehicle) }}"
-                                                    class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a>
-                                            </td> --}}
+                                                    class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a> --}}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

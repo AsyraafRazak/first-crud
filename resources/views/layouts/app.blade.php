@@ -35,10 +35,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('inventory.index') }}">Inventories</a>
+                            <a class="nav-link" href="{{ route('inventories.index') }}">Inventories</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('vehicle.index') }}">Vehicles</a>
+                            <a class="nav-link" href="{{ route('vehicles.index') }}">Vehicles</a>
                         </li>
                     </ul>
 

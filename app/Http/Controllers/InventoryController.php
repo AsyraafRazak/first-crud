@@ -64,6 +64,6 @@ class InventoryController extends Controller
     {
         $inventory->delete();
 
-        return redirect()->route('inventory.index');
+        return redirect()->route('inventories.index');
     }
 }

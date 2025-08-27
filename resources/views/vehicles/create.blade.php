@@ -21,7 +21,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-success"><i class="bi bi-plus-lg"></i></button>
-                        <a href="{{ route('vehicle.index') }}" class="btn btn-secondary">Back</a>
+                        <a href="{{ route('vehicles.index') }}" class="btn btn-secondary">Back</a>
                     </form> 
                 </div>
             </div>
