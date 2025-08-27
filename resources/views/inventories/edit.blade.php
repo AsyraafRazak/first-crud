@@ -27,7 +27,7 @@
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
                                 <input type="text" class="form-control" id="description" name="description"
-                                    value="{{ $inventory->quantity }}" required>
+                                    value="{{ $inventory->description }}" required>
                             </div>
 
                             <button type="submit" class="btn btn-success"><i class="bi bi-floppy"></i></button>
