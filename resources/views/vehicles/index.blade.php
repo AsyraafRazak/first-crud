@@ -19,6 +19,7 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Quantity</th>
+                                        <th>User</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -28,6 +29,7 @@
                                             <td>{{ $vehicle->id }}</td>
                                             <td>{{ $vehicle->name }}</td>
                                             <td>{{ $vehicle->qty }}</td>
+                                            <td>{{ $vehicle->user->name}}</td>
                                             <td><a href="{{ route('vehicles.show', $vehicle) }}"
                                                     class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
                                                 <a href="{{ route('vehicles.edit', $vehicle) }}"

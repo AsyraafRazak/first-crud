@@ -7,6 +7,12 @@ use App\Models\Vehicle;
 
 class VehicleController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $vehicles = Vehicle::all();

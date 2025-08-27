@@ -20,6 +20,7 @@ class VehicleFactory extends Factory
         return [
             'name' => $this->faker->word(),
             'qty' => $this->faker->numberBetween(1,100),
+            'user_id'=> \App\Models\User::factory(),
         ];
     }
 }
