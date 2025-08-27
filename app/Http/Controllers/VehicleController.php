@@ -15,7 +15,8 @@ class VehicleController extends Controller
 
     public function index()
     {
-        $vehicles = Vehicle::all();
+        // $vehicles = Vehicle::all();
+        $vehicles = Vehicle::latest()->get();
 
         return view('vehicles.index', compact('vehicles'));
     }
@@ -30,6 +31,7 @@ class VehicleController extends Controller
         $vehicle = new Vehicle();
         $vehicle->name = $request->name;
         $vehicle->qty = $request->qty;
+        $vehicle->user_id = auth()->user()->id;
         $vehicle->save();
 
         //return to $vehicle index
