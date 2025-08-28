@@ -7,9 +7,11 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>{{ __('Inventories Index') }}</span>
-                        <a href="{{ route('inventories.create') }}" class="btn btn-success btn-sm">
+                        @can('create', App\Models\Inventory::class)
+                            <a href="{{ route('inventories.create') }}" class="btn btn-success btn-sm">
                             <i class="bi bi-plus-lg"></i>
                         </a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <table class="table">

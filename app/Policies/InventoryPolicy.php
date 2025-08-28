@@ -31,7 +31,7 @@ class InventoryPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->inventories()->count() < 4;
     }
 
     /**
