@@ -39,7 +39,7 @@ class InventoryPolicy
      */
     public function update(User $user, Inventory $inventory): bool
     {
-        return false;
+       return $user->id === $inventory->user_id;
     }
 
     /**

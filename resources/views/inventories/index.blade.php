@@ -38,11 +38,13 @@
                                                 <a href="{{ route('inventories.show', $inventory) }}"
                                                     class="btn btn-primary btn-sm"><i class="bi bi-eye"></i></a>
                                             @endcan
-                                            <a href="{{ route('inventories.edit', $inventory) }}"
-                                                class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
-                                            {{-- <a onclick="return confirm('Delete {{ $inventory->name }} tau')"
+                                            @can('update', $inventory)
+                                                <a href="{{ route('inventories.edit', $inventory) }}"
+                                                    class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i></a>
+                                                {{-- <a onclick="return confirm('Delete {{ $inventory->name }} tau')"
                                                 href="{{ route('inventories.destroy', $inventory) }}"
                                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a> --}}
+                                            @endcan
                                             <form action="{{ route('inventories.destroy', $inventory) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
