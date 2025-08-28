@@ -6,10 +6,11 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\UserController;
 use App\Models\Vehicle;
 
+Route::redirect('/', '/home');
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 Auth::routes();
 
