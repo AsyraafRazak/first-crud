@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\UserController;
 use App\Models\Vehicle;
+
 
 Route::get('/', function () {
     return view('home');
@@ -29,3 +31,11 @@ Route::get('/vehicles/{vehicle}', [VehicleController::class, 'show'])->name('veh
 Route::get('/vehicles/{vehicle}/edit', [VehicleController::class, 'edit'])->name('vehicles.edit');
 Route::post('/vehicles/{vehicle}/edit', [VehicleController::class, 'update']);
 Route::delete('/vehicles/destroy/{vehicle}', [VehicleController::class, 'destroy'])->name('vehicles.destroy');
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users/create', [UserController::class, 'store']);
+Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::post('/users/{user}/edit', [UserController::class, 'update']);
+Route::delete('/users/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
