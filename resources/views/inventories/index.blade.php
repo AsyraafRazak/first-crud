@@ -45,6 +45,7 @@
                                                 href="{{ route('inventories.destroy', $inventory) }}"
                                                 class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></a> --}}
                                             @endcan
+                                            @can('delete', $inventory)
                                             <form action="{{ route('inventories.destroy', $inventory) }}" method="POST"
                                                 class="d-inline">
                                                 @csrf
@@ -54,6 +55,7 @@
                                                     type="submit" class="btn btn-danger btn-sm">
                                                     <i class="bi bi-trash"></i></a>
                                             </form>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
