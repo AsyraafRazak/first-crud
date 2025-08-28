@@ -5,6 +5,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\UserController;
 use App\Models\Vehicle;
+use App\Http\Controllers\APIPostController;
 
 Route::redirect('/', '/home');
 
@@ -40,3 +41,5 @@ Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show')
 Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
 Route::post('/users/{user}/edit', [UserController::class, 'update']);
 Route::delete('/users/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+Route::get('posts', [APIPostController::class, 'index'])->name('posts.index');
