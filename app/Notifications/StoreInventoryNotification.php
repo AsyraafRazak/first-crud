@@ -48,7 +48,7 @@ class StoreInventoryNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'Inventory Created',
+            'message' => 'Inventory Created Successfully '.now().'!',
         ];
     }
 }
