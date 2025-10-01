@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\VehicleController;
@@ -43,3 +44,23 @@ Route::post('/users/{user}/edit', [UserController::class, 'update']);
 Route::delete('/users/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
 Route::get('posts', [APIPostController::class, 'index'])->name('posts.index');
+
+
+Route::get('ollama-models',function () {
+    $response = Http::get('http://localhost:11434/api/tags');
+    $models = $response->json()['models'] ?? []; // extract models array
+    return view('ollama-model', compact('models'));
+})->name('ollama-models');
+
+Route::get('chat-ollama', function () {
+    $response = Http::post('http://localhost:11434/api/generate', [
+        'model' => 'gemma3:1b',
+        'prompt' => 'Hello, how are you?',
+        'stream' => false,
+    ]);
+    
+    $data = $response->json(); // decode JSON
+    return view('chat-ollama', compact('data'));
+})->name('chat-ollama');
+
+Route::get('/staffs', [StaffController::class, 'index'])->name('staff.index');
