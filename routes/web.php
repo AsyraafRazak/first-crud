@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\faqBotController;
 use App\Http\Controllers\StaffController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
@@ -63,4 +64,7 @@ Route::get('chat-ollama', function () {
     return view('chat-ollama', compact('data'));
 })->name('chat-ollama');
 
-Route::get('/staffs', [StaffController::class, 'index'])->name('staff.index');
+Route::get('/staffs', [StaffController::class, 'index'])->name('staffs.index');
+
+Route::get('/chat', [faqBotController::class, 'index'])->name('chat.index');
+Route::post('/chat', [faqBotController::class, 'chat'])->name('chat.send'); 
