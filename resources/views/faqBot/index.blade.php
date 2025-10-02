@@ -1,4 +1,4 @@
-@extends('layouts.staffLayout')
+@extends('layouts.app')
 
 @section('content')
 <div class="container mt-4">
@@ -33,6 +33,20 @@ document.getElementById('chat-form').addEventListener('submit', async function(e
     let chatBox = document.getElementById('chat-box');
     chatBox.innerHTML += `<div><strong>You:</strong> ${message}</div>`;
 
+    // show animated loading message
+    let loadingId = 'loading-' + Date.now();
+    chatBox.innerHTML += `<div id="${loadingId}"><em>Bot is typing<span class="dots">.</span></em></div>`;
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    // typing dots animation
+    let dotCount = 1;
+    let typingInterval = setInterval(() => {
+        let dots = ".".repeat(dotCount);
+        document.querySelector(`#${loadingId} .dots`).textContent = dots;
+        dotCount = (dotCount % 3) + 1; // cycle 1 → 2 → 3 → 1
+    }, 500);
+
+    // send request
     let response = await fetch("{{ route('chat.send') }}", {
         method: "POST",
         headers: {
@@ -43,6 +57,10 @@ document.getElementById('chat-form').addEventListener('submit', async function(e
     });
 
     let data = await response.json();
+
+    // stop animation and replace with bot reply
+    clearInterval(typingInterval);
+    document.getElementById(loadingId).remove();
     chatBox.innerHTML += `<div><strong>Bot:</strong> ${data.bot}</div>`;
     chatBox.scrollTop = chatBox.scrollHeight; // auto scroll
     document.getElementById('message').value = '';

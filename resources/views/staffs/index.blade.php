@@ -1,15 +1,15 @@
-@extends('layouts.staffLayout')
+@extends('layouts.app')
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>{{ __('Staffs Index') }}</span>
                     </div>
                     <div class="card-body">
                         <div class="card-body">
-                             <table class="table table-striped table-bordered">
+                             <table class="table">
                             <thead>
                                 <tr>
                                     <th>ID</th>

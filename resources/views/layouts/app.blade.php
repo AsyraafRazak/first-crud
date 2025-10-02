@@ -43,6 +43,12 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('users.index') }}">User</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('staffs.index') }}">Staff Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('chat.index') }}">ChatBot</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -86,11 +92,6 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                @foreach(Auth::user()->unreadNotifications as $notification)
-                                    <a class="dropdown-item" href="#">
-                                        {{ $notification->data['message'] }}
-                                    </a>
-                                @endforeach
                             </div>
                         </li>
                     </ul>
