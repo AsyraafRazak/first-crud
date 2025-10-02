@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Cloudstudio\Ollama\Facades\Ollama;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\DB;
+use Cloudstudio\Ollama\Facades\Ollama; // you can use this for the final generation
+use App\Helpers\VectorHelper;
 use App\Models\Staff;
 
 class faqBotController extends Controller
@@ -15,70 +18,74 @@ class faqBotController extends Controller
 
     public function chat(Request $request)
     {
-        $userMessage = $request->input('message');
+        try {
+            $userMessage = $request->input('message');
+            $ollamaUrl = config('ollama.url', env('OLLAMA_URL', 'http://127.0.0.1:11434'));
+            $embedModel = 'nomic-embed-text'; // or nomic-embed-text, etc.
 
-        $prompt = <<<PROMPT
-You are a strict JSON generator.
-Take the user question and output ONLY valid JSON. No explanations, no markdown, no extra text.
+            // 1) Get embedding for the user query (try both endpoints)
+            $resp = Http::post($ollamaUrl . '/api/embed', [
+                'model' => $embedModel,
+                'input' => $userMessage,
+            ]);
+            if ($resp->failed()) {
+                $resp = Http::post($ollamaUrl . '/api/embeddings', [
+                    'model' => $embedModel,
+                    'prompt' => $userMessage,
+                ]);
+            }
+            $data = $resp->json();
 
-Examples:
-User: Who is Ali?
-{"action": "find_staff", "name": "Ali"}
+            // Extract embedding robustly
+            $qEmbedding = $data['embedding'] ?? ($data['data'][0]['embedding'] ?? ($data['embeddings'][0] ?? null));
+            if (!is_array($qEmbedding)) {
+                \Log::error('Query embedding failed: ' . $resp->body());
+                return response()->json(['user' => $userMessage, 'bot' => "Sorry, I couldn't create query embedding."]);
+            }
 
-User: How many staff in HR?
-{"action": "count_department", "department": "HR"}
+            // 2) Load stored embeddings and score
+            $rows = DB::table('staff_embeddings')->get();
+            $scores = [];
+            foreach ($rows as $row) {
+                $vec = json_decode($row->embedding, true);
+                $score = VectorHelper::cosineSimilarity($qEmbedding, $vec);
+                $scores[] = ['staff_id' => $row->staff_id, 'score' => $score];
+            }
+            usort($scores, fn($a, $b) => $b['score'] <=> $a['score']);
+            $top = array_slice($scores, 0, 3);
 
-User: List staff in IT
-{"action": "list_department", "department": "IT"}
+            // 3) Build context
+            $context = "Relevant staff records:\n";
+            foreach ($top as $m) {
+                $s = DB::table('staff')->find($m['staff_id']);
+                if ($s) {
+                    $context .= "- {$s->name}, {$s->position} in {$s->department}. Email: {$s->email}\n";
+                }
+            }
 
-Now process this:
-{$userMessage}
+            // 4) Ask LLM (use Ollama facade or POST /api/generate)
+            $prompt = <<<PROMPT
+You are a staff assistant. Use only the following staff data to answer precisely:
 
-IMPORTANT: Reply with ONLY valid JSON. Do not include words, explanations, or formatting.
+$context
+
+User question: {$userMessage}
 PROMPT;
 
-        $response = Ollama::prompt($prompt)
-            ->model('gemma3:1b')
-            ->ask();
+            $response = Ollama::prompt($prompt)
+                ->model('gemma3:1b')
+                ->ask();
 
-        $raw = $response['response'] ?? '';
-        
-        // 🔎 Debug: log the raw response
-        \Log::info('Ollama raw response: ' . $raw);
+            $botReply = $response['response'] ?? 'Sorry, no answer.';
 
-        $json = json_decode(trim($raw), true);
+            return response()->json(['user' => $userMessage, 'bot' => $botReply]);
 
-        $botReply = "Sorry, I couldn’t understand your request.";
-
-        // 2. If JSON is valid, map actions → DB queries
-        if ($json && isset($json['action'])) {
-            switch ($json['action']) {
-                case 'find_staff':
-                    $staff = Staff::where('name', 'like', "%{$json['name']}%")->first();
-                    $botReply = $staff
-                        ? "I found {$staff->name}, working as {$staff->position} in {$staff->department}. Contact: {$staff->email}, Phone: {$staff->phone}."
-                        : "No staff found with name {$json['name']}.";
-                    break;
-
-                case 'count_department':
-                    $count = Staff::where('department', 'like', "%{$json['department']}%")->count();
-                    $botReply = "There are {$count} staff in the {$json['department']} department.";
-                    break;
-
-                case 'list_department':
-                    $staffs = Staff::where('department', 'like', "%{$json['department']}%")
-                        ->pluck('name')->toArray();
-                    $botReply = count($staffs)
-                        ? "Staff in {$json['department']}: " . implode(', ', $staffs)
-                        : "No staff found in {$json['department']}.";
-                    break;
-            }
+        } catch (\Throwable $e) {
+            \Log::error($e);
+            return response()->json([
+                'error' => true,
+                'message' => $e->getMessage(),
+            ], 500);
         }
-
-        // 3. Send final answer back to frontend
-        return response()->json([
-            'user' => $userMessage,
-            'bot'  => $botReply,
-        ]);
     }
 }
